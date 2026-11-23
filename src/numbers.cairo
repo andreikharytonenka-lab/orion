@@ -2373,7 +2373,7 @@ impl I32Div of Div<i32> {
         let felt_result: felt252 = result.into();
         let signed_int_result: i32 = felt_result.try_into().unwrap();
 
-        if lhs * rhs < 0 {
+        if (lhs < 0) ^ (rhs < 0) {
             signed_int_result * -1
         } else {
             signed_int_result
@@ -2385,6 +2385,13 @@ impl I32DivEq of DivEq<i32> {
     #[inline(always)]
     fn div_eq(ref self: i32, other: i32) {
         self = Div::div(self, other);
+    }
+}
+
+impl I32Rem of Rem<i32> {
+    fn rem(lhs: i32, rhs: i32) -> i32 {
+        let div = Div::div(lhs, rhs);
+        lhs - rhs * div
     }
 }
 
@@ -2687,7 +2694,7 @@ impl I64Div of Div<i64> {
         let felt_result: felt252 = result.into();
         let signed_int_result: i64 = felt_result.try_into().unwrap();
 
-        if lhs * rhs < 0 {
+        if (lhs < 0) ^ (rhs < 0) {
             signed_int_result * -1
         } else {
             signed_int_result
@@ -2699,6 +2706,13 @@ impl I64DivEq of DivEq<i64> {
     #[inline(always)]
     fn div_eq(ref self: i64, other: i64) {
         self = Div::div(self, other);
+    }
+}
+
+impl I64Rem of Rem<i64> {
+    fn rem(lhs: i64, rhs: i64) -> i64 {
+        let div = Div::div(lhs, rhs);
+        lhs - rhs * div
     }
 }
 
