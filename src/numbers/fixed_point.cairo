@@ -2,3 +2,4 @@
 mod core;
 mod implementations;
 mod utils;
+use implementations::f16x16;
